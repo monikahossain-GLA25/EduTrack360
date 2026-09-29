@@ -18,5 +18,35 @@ namespace EduTrack360.Controllers
         {
             return View();
         }
+
+        public async Task<IActionResult> Index(
+            string? search,
+            int? domainId)
+        {
+            var query =
+                _context.StudyWorkspaces
+                    .Include(x => x.PreparationDomain)
+                    .Include(x => x.PreparationOption)
+                    .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(x =>
+                    x.Name.Contains(search));
+            }
+
+            if (domainId.HasValue)
+            {
+                query = query.Where(x =>
+                    x.PreparationDomainId == domainId.Value);
+            }
+
+            var workspaces =
+                await query
+                    .OrderBy(x => x.Name)
+                    .ToListAsync();
+
+            return View(workspaces);
+        }
     }
 }
