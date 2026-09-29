@@ -1,10 +1,9 @@
-﻿namespace EduTrack360.Models.Enums
+﻿namespace EduTrack360.Models.Enums;
+
+public enum PriorityLevel
 {
-    enum Level
-    {
-        Low ,
-        Medium ,
-        High
-         
-    }
+    Low = 1,
+    Medium = 2,
+    High = 3,
+    Critical = 4
 }
